@@ -31,7 +31,7 @@ namespace Utilities.Managers
             while (true);
         }
 
-        public string GetIP4Address()
+        private string GetIP4Address()
         {
             string IP4Address = String.Empty;
             /* foreach (IPAddress IPA in Dns.GetHostAddresses(Dns.GetHostName()))
