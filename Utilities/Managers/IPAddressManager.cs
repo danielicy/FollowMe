@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Net;
-using System.Net.Sockets;
 using Utilities.Helpers;
 using System.Threading;
 
@@ -33,18 +31,28 @@ namespace Utilities.Managers
             while (true);
         }
 
-        private string GetIP4Address()
+        public string GetIP4Address()
         {
             string IP4Address = String.Empty;
-            foreach (IPAddress IPA in Dns.GetHostAddresses(Dns.GetHostName()))
-            {
-                if (IPA.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    IP4Address = IPA.ToString();
-                    break;
-                }
-            }
-            return IP4Address;
+            /* foreach (IPAddress IPA in Dns.GetHostAddresses(Dns.GetHostName()))
+             {
+                 if (IPA.AddressFamily == AddressFamily.InterNetwork)
+                 {
+                     IP4Address = IPA.ToString();
+                     break;
+                 }
+             }*/
+
+            string url = "http://checkip.dyndns.org";
+            System.Net.WebRequest req = System.Net.WebRequest.Create(url);
+            System.Net.WebResponse resp = req.GetResponse();
+            System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
+            string response = sr.ReadToEnd().Trim();
+            string[] a = response.Split(':');
+            string a2 = a[1].Substring(1);
+            string[] a3 = a2.Split('<');
+            string a4 = a3[0];
+            return a4;
         }
       
         private void CheckIPAddress()
