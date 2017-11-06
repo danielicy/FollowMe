@@ -1,9 +1,14 @@
 ﻿
 
+using Utilities.Managers;
+
 namespace FollowMyRDP
 {
     partial class FollowMeService
     {
+
+        private IPAddressManager _IPAddressManager;
+        private MailManager _mailManager;
         /// <summary> 
         /// Required designer variable.
         /// </summary>
@@ -32,6 +37,15 @@ namespace FollowMyRDP
         {
             components = new System.ComponentModel.Container();
             this.ServiceName = "FollowMeService";
+
+            _mailManager = new MailManager();
+            _IPAddressManager = new IPAddressManager();
+            _IPAddressManager.IPAddressChanged += _IPAddressManager_IPAddressChanged;
+        }
+
+        private void _IPAddressManager_IPAddressChanged(object sender, IPAddressEventArgs args)
+        {
+            _mailManager.SendMail(args.IPAddress);
         }
 
         #endregion

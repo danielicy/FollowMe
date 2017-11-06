@@ -1,4 +1,6 @@
-﻿ 
+﻿
+
+using Utilities.Managers;
 
 namespace FollowMe.UI
 {
@@ -6,7 +8,21 @@ namespace FollowMe.UI
     {
         static void Main(string[] args)
         {
-           
+            Wrapper wraper = new Wrapper();
         }
+    }
+
+    public class Wrapper
+    {
+        private IPAddressManager _IPAddressManager;
+        
+
+        public Wrapper()
+        {            
+            _IPAddressManager = new IPAddressManager();           
+           
+            _IPAddressManager.Init();
+        }
+        
     }
 }
