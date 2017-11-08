@@ -7,15 +7,25 @@ namespace Utilities.Managers
 { 
     public class MailManager
     {
+        private string _from;
+        private string _destination;
+        private string _passWord;
+
+        public MailManager()
+        {
+            _from = RegistryHelper.GetRegistryValue("FROMADDRESS");
+            _destination = RegistryHelper.GetRegistryValue("DESTINATIONADDRESS");
+            _passWord = RegistryHelper.GetRegistryValue("PASSWORD");
+        }
+
         public void SendMail(string ipAddress)
         {
-            var fromAddress = new MailAddress("****@gmail.com", "From Danieli");
-            var toAddress = new MailAddress("***@hotmail.com", "To You");
-            const string fromPassword = "*****";
-            const string subject = "Subject";
-            const string body = "Body";
+            MailAddress fromAddress = new MailAddress(_from, "From Danieli");
+            MailAddress toAddress = new MailAddress(_destination, "To You");
+            string fromPassword = _passWord;//******
+            string subject = "IP Address Changed";
+            string body = ipAddress;
 
-            
 
             var smtp = new SmtpClient
             {
@@ -36,56 +46,7 @@ namespace Utilities.Managers
             }
         }
         
-
-        //        private string _from;
-        //        private string _destination;
-        //        private string _passWord;
-
-        //        public MailManager()
-        //        {
-        //#if RELEASE
-        //            _from = RegistryHelper.GetRegistryValue("FROMADDRESS_KEY");
-        //            _destination = RegistryHelper.GetRegistryValue("DESTINATIONADDRESS_KEY");
-        //            _passWord = RegistryHelper.GetRegistryValue("PASSWORD_KEY");
-        //#endif
-
-        //#if DEBUG
-        //            _from = FROMADDRESS_KEY;
-        //            _destination = DESTINATIONADDRESS_KEY;
-        //            _passWord = PASSWORD_KEY;
-        //#endif
-        //        }
-
-        //        public void SendMail(string IpAddress)
-        //        {
-        //            var fromAddress = new MailAddress(_from, "From Me");
-        //            var toAddress = new MailAddress(_destination, "To You");
-        //            string fromPassword = _passWord;
-
-        //            const string subject = "IP changed";
-        //            string body = IpAddress;
-
-        //            var smtp = new SmtpClient
-        //            {
-        //                Host = "smtp.gmail.com",
-        //                Port = 587,
-        //                EnableSsl = true,
-        //                DeliveryMethod = SmtpDeliveryMethod.Network,
-        //                UseDefaultCredentials = false,
-        //                Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
-
-        //            };
-
-        //            smtp.SendCompleted += new SendCompletedEventHandler(SendCompletedCallback);
-        //            using (var message = new MailMessage(fromAddress, toAddress)
-        //            {
-        //                Subject = subject,
-        //                Body = body
-        //            })
-        //            {
-        //                smtp.SendAsync(message, "");
-        //            }
-        //        }
+ 
 
         private void SendCompletedCallback(object sender, AsyncCompletedEventArgs e)
         {

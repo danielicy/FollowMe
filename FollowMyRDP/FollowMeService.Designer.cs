@@ -1,6 +1,6 @@
 ﻿
 
-using Utilities.Managers;
+
 
 namespace FollowMyRDP
 {
@@ -8,8 +8,7 @@ namespace FollowMyRDP
     {
 
         private System.Diagnostics.EventLog eventLog1;
-        private IPAddressManager _IPAddressManager;
-        private MailManager _mailManager;
+       
         /// <summary> 
         /// Required designer variable.
         /// </summary>
@@ -46,10 +45,7 @@ namespace FollowMyRDP
 
         }
 
-        private void _IPAddressManager_IPAddressChanged(object sender, IPAddressEventArgs args)
-        {
-            _mailManager.SendMail(args.IPAddress);
-        }
+       
 
         #endregion
 

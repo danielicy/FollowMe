@@ -1,4 +1,5 @@
-﻿using System.ServiceProcess;
+﻿using Utilities.Managers;
+using System.ServiceProcess;
 using System.Runtime.InteropServices;
 using System;
 
@@ -30,6 +31,8 @@ namespace FollowMyRDP
 
     public partial class FollowMeService : ServiceBase
     {
+        private IPAddressManager _IPAddressManager;
+        private MailManager _mailManager;
 
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool SetServiceStatus(IntPtr handle, ref ServiceStatus serviceStatus);
@@ -46,6 +49,10 @@ namespace FollowMyRDP
 
             eventLog1.Source = "MySource";
             eventLog1.Log = "MyNewLog";
+
+            _IPAddressManager = new IPAddressManager();
+
+            _IPAddressManager.Init();
 
         }
 
