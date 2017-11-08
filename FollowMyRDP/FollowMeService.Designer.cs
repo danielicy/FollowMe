@@ -43,14 +43,6 @@ namespace FollowMyRDP
             // 
             this.ServiceName = "FollowMeService";
             ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).EndInit();
-            eventLog1 = new System.Diagnostics.EventLog();
-            if (!System.Diagnostics.EventLog.SourceExists("MySource"))
-            {
-                System.Diagnostics.EventLog.CreateEventSource(
-                    "MySource", "MyNewLog");
-            }
-            eventLog1.Source = "MySource";
-            eventLog1.Log = "MyNewLog";
 
         }
 

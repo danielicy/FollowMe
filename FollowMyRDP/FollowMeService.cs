@@ -37,6 +37,16 @@ namespace FollowMyRDP
         public FollowMeService()
         {
             InitializeComponent();
+
+            if (!System.Diagnostics.EventLog.SourceExists("MySource"))
+            {
+                System.Diagnostics.EventLog.CreateEventSource(
+                    "MySource", "MyNewLog");
+            }
+
+            eventLog1.Source = "MySource";
+            eventLog1.Log = "MyNewLog";
+
         }
 
         protected override void OnStart(string[] args)
