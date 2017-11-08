@@ -2,6 +2,7 @@
 using System.ServiceProcess;
 using System.Runtime.InteropServices;
 using System;
+using Utilities.Helpers;
 
 namespace FollowMyRDP
 {
@@ -37,7 +38,7 @@ namespace FollowMyRDP
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool SetServiceStatus(IntPtr handle, ref ServiceStatus serviceStatus);
 
-        public FollowMeService()
+        public FollowMeService(string[] args)
         {
             InitializeComponent();
 
@@ -47,13 +48,25 @@ namespace FollowMyRDP
                     "MySource", "MyNewLog");
             }
 
+            if(args != null)
+            {
+                RegistryHelper.SetRegistryKey("FROMADDRESS", args[0]);
+                RegistryHelper.SetRegistryKey("DESTINATIONADDRESS", args[1]);
+                RegistryHelper.SetRegistryKey("PASSWORD", args[2]);
+            }            
+
             eventLog1.Source = "MySource";
             eventLog1.Log = "MyNewLog";
 
+            _mailManager = new MailManager();
             _IPAddressManager = new IPAddressManager();
-
+            _IPAddressManager.IPAddressChanged += _IPAddressManager_IPAddressChanged;
             _IPAddressManager.Init();
+        }
 
+        private void _IPAddressManager_IPAddressChanged(object sender, IPAddressEventArgs args)
+        {
+            _mailManager.SendMail(args.IPAddress);
         }
 
         protected override void OnStart(string[] args)

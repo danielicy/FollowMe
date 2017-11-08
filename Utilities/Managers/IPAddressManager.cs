@@ -4,10 +4,17 @@ using System.Threading;
 
 namespace Utilities.Managers
 {
+    public class IPAddressEventArgs : EventArgs
+    {
+        public string IPAddress { get; set; }
+    }
+
+    public delegate void IPAddressEventHAndler(object sender, IPAddressEventArgs args);
+
     public class IPAddressManager
     {
         #region private embers
-        private string _currentIpAddress;
+        
         const string IP_REGISTRY_KEY = "Current_IP";
         private MailManager _mailManager;
         #endregion
@@ -26,8 +33,8 @@ namespace Utilities.Managers
                 CheckIPAddress();
 
                 //waits for 10 minutes
-                //Thread.Sleep(new TimeSpan(0, 10, 0));
-                Thread.Sleep(15000);
+                Thread.Sleep(new TimeSpan(0, 10, 0));
+               // Thread.Sleep(15000);
             }
             while (true);
         }
@@ -72,7 +79,8 @@ namespace Utilities.Managers
             {
                 RegistryHelper.SetRegistryKey(IP_REGISTRY_KEY, currentIpAddress);
 
-                _mailManager.SendMail(currentIpAddress);
+                IPAddressChanged?.Invoke(this, new IPAddressEventArgs() { IPAddress = currentIpAddress });
+                 
             }
         }
 
@@ -84,10 +92,5 @@ namespace Utilities.Managers
 
     }
 
-    public class IPAddressEventArgs :  EventArgs
-    {
-        public string IPAddress { get; set; }
-    }
-
-    public delegate void IPAddressEventHAndler(object sender, IPAddressEventArgs args);
+    
 }
