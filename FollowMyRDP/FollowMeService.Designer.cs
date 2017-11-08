@@ -7,6 +7,7 @@ namespace FollowMyRDP
     partial class FollowMeService
     {
 
+        private System.Diagnostics.EventLog eventLog1;
         private IPAddressManager _IPAddressManager;
         private MailManager _mailManager;
         /// <summary> 
@@ -35,12 +36,22 @@ namespace FollowMyRDP
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.eventLog1 = new System.Diagnostics.EventLog();
+            ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).BeginInit();
+            // 
+            // FollowMeService
+            // 
             this.ServiceName = "FollowMeService";
+            ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).EndInit();
+            eventLog1 = new System.Diagnostics.EventLog();
+            if (!System.Diagnostics.EventLog.SourceExists("MySource"))
+            {
+                System.Diagnostics.EventLog.CreateEventSource(
+                    "MySource", "MyNewLog");
+            }
+            eventLog1.Source = "MySource";
+            eventLog1.Log = "MyNewLog";
 
-            _mailManager = new MailManager();
-            _IPAddressManager = new IPAddressManager();
-            _IPAddressManager.IPAddressChanged += _IPAddressManager_IPAddressChanged;
         }
 
         private void _IPAddressManager_IPAddressChanged(object sender, IPAddressEventArgs args)
@@ -49,6 +60,8 @@ namespace FollowMyRDP
         }
 
         #endregion
+
+        
     }
 
 }
