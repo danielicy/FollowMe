@@ -8,7 +8,7 @@ namespace FollowMe.UI
     {
         static void Main(string[] args)
         {
-            Wrapper wraper = new Wrapper();
+            Wrapper wraper = new Wrapper(args);
         }
     }
 
@@ -17,7 +17,7 @@ namespace FollowMe.UI
         private IPAddressManager _IPAddressManager;
         private MailManager _mailManager;
 
-        public Wrapper()
+        public Wrapper(string[] args)
         {
             _mailManager = new MailManager();
             _IPAddressManager = new IPAddressManager();           
