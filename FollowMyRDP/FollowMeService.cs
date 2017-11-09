@@ -48,10 +48,16 @@ namespace FollowMyRDP
                 System.Diagnostics.EventLog.CreateEventSource(
                     "MySource", "MyNewLog");
             }
+
+           
           
-          
-                RegistryHelper.SetRegistryKey("FROMADDRESS", ConfigurationManager.AppSettings["SenderMail"]);
+            if(RegistryHelper.GetRegistryValue("FROMADDRESS") ==null)
+            RegistryHelper.SetRegistryKey("FROMADDRESS", ConfigurationManager.AppSettings["SenderMail"]);
+
+            if (RegistryHelper.GetRegistryValue("DESTINATIONADDRESS") == null)
                 RegistryHelper.SetRegistryKey("DESTINATIONADDRESS", ConfigurationManager.AppSettings["RecieverMail"]);
+
+            if (RegistryHelper.GetRegistryValue("PASSWORD") == null)
                 RegistryHelper.SetRegistryKey("PASSWORD", ConfigurationManager.AppSettings["Password"]);
                     
 
