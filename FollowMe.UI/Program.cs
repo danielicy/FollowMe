@@ -16,11 +16,12 @@ namespace FollowMe.UI
     {
         private IPAddressManager _IPAddressManager;
         private MailManager _mailManager;
-
+        private System.Diagnostics.EventLog eventLog1;
         public Wrapper(string[] args)
         {
-            _mailManager = new MailManager();
-            _IPAddressManager = new IPAddressManager();           
+            eventLog1 = new System.Diagnostics.EventLog();
+            _mailManager = new MailManager(eventLog1);
+            _IPAddressManager = new IPAddressManager(eventLog1);           
            
             
             _IPAddressManager.IPAddressChanged += _IPAddressManager_IPAddressChanged;

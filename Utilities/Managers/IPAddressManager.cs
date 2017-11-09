@@ -1,6 +1,7 @@
 ﻿using System;
 using Utilities.Helpers;
 using System.Threading;
+using System.Diagnostics;
 
 namespace Utilities.Managers
 {
@@ -14,16 +15,18 @@ namespace Utilities.Managers
     public class IPAddressManager
     {
         #region private embers
-        
+        private  EventLog eventLog1;
+
         const string IP_REGISTRY_KEY = "Current_IP";
-        private MailManager _mailManager;
+       
         #endregion
 
         public event IPAddressEventHAndler IPAddressChanged;
 
-        public IPAddressManager()
+        public IPAddressManager(EventLog log)
         {
-            _mailManager = new MailManager();
+            eventLog1 = log;
+           
         }
 
         public void Init()

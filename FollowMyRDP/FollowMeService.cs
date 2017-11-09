@@ -58,10 +58,7 @@ namespace FollowMyRDP
             eventLog1.Source = "MySource";
             eventLog1.Log = "MyNewLog";
 
-            _mailManager = new MailManager();
-            _IPAddressManager = new IPAddressManager();
-            _IPAddressManager.IPAddressChanged += _IPAddressManager_IPAddressChanged;
-            _IPAddressManager.Init();
+           
         }
 
         private void _IPAddressManager_IPAddressChanged(object sender, IPAddressEventArgs args)
@@ -71,17 +68,33 @@ namespace FollowMyRDP
 
         protected override void OnStart(string[] args)
         {
-            eventLog1.WriteEntry("In OnStart");
+            try
+            {
+               // eventLog1.WriteEntry("In OnStart");
 
-            // Update the service state to Start Pending.  
-            ServiceStatus serviceStatus = new ServiceStatus();
-            serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;
-            serviceStatus.dwWaitHint = 100000;
-            SetServiceStatus(this.ServiceHandle, ref serviceStatus);
+                // Update the service state to Start Pending.  
+                ServiceStatus serviceStatus = new ServiceStatus();
+                serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;
+                serviceStatus.dwWaitHint = 100000;
+                SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
-            // Update the service state to Running.  
-            serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
-            SetServiceStatus(this.ServiceHandle, ref serviceStatus);
+                // Update the service state to Running.  
+                serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
+                SetServiceStatus(this.ServiceHandle, ref serviceStatus);
+                _mailManager = new MailManager(eventLog1);
+                _IPAddressManager = new IPAddressManager(eventLog1);
+                _IPAddressManager.IPAddressChanged += _IPAddressManager_IPAddressChanged;
+                _IPAddressManager.Init();
+
+                eventLog1.WriteEntry("OnStart Susccesfully");
+                eventLog1.Log = "FollowMeService started Susccesfully";
+
+            }
+            catch(Exception ex)
+            {
+                eventLog1.WriteEntry("failed onStart: " + ex.Message);
+            }
+          
         }
 
         protected override void OnStop()

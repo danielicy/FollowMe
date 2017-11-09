@@ -10,7 +10,7 @@ namespace FollowMe.UnitTestProject
         [TestMethod]
         public void TestMethod1()
         {
-            IPAddressManager ipManager = new IPAddressManager();
+           
 
         // string t =   ipManager.GetIP4Address();
           //  Assert.IsTrue(t != null);
