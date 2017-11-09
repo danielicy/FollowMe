@@ -6,7 +6,7 @@ set PATH=%PATH%;%DOTNETFX2%
 
 echo Installing FollowMeService...
 echo ---------------------------------------------------
-InstallUtil /i FollowMyRDP.exe REM Sender_Mail Recipient_Mail Sender_Password
+InstallUtil /i FollowMyRDP.exe 
 echo ---------------------------------------------------
 echo Done.
 pause

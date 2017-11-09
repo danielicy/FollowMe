@@ -3,6 +3,7 @@ using System.ServiceProcess;
 using System.Runtime.InteropServices;
 using System;
 using Utilities.Helpers;
+using System.Configuration;
 
 namespace FollowMyRDP
 {
@@ -47,13 +48,12 @@ namespace FollowMyRDP
                 System.Diagnostics.EventLog.CreateEventSource(
                     "MySource", "MyNewLog");
             }
-
-            if(args != null)
-            {
-                RegistryHelper.SetRegistryKey("FROMADDRESS", args[0]);
-                RegistryHelper.SetRegistryKey("DESTINATIONADDRESS", args[1]);
-                RegistryHelper.SetRegistryKey("PASSWORD", args[2]);
-            }            
+          
+          
+                RegistryHelper.SetRegistryKey("FROMADDRESS", ConfigurationManager.AppSettings["SenderMail"]);
+                RegistryHelper.SetRegistryKey("DESTINATIONADDRESS", ConfigurationManager.AppSettings["RecieverMail"]);
+                RegistryHelper.SetRegistryKey("PASSWORD", ConfigurationManager.AppSettings["Password"]);
+                    
 
             eventLog1.Source = "MySource";
             eventLog1.Log = "MyNewLog";
