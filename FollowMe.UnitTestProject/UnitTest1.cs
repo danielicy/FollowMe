@@ -8,12 +8,23 @@ namespace FollowMe.UnitTestProject
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
+        public void SendMail()
         {
-           
 
-        // string t =   ipManager.GetIP4Address();
-          //  Assert.IsTrue(t != null);
+            MailObject mailObject = new MailObject();
+
+            
+
+            /*mailObject.Sender = "A********Z@s******.com";
+           mailObject.Reciever = "X*******@T********p.com";
+           mailObject.Password = "*********";
+           mailObject.Host = "smtp.live.com";*/
+
+
+
+
+            MailManager _mailManager = new MailManager(mailObject);
+            _mailManager.SendMail("Hi There");
 
         }
     }
